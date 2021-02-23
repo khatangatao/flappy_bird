@@ -17,7 +17,7 @@ public class Bird {
     public Bird(int x, int y) {
         position = new Vector3(x, y, 0);
         velocity = new Vector3(0, 0, 0);
-        bird = new Texture("bird");
+        bird = new Texture("bird.png");
 
     }
 
@@ -37,7 +37,11 @@ public class Bird {
         return position;
     }
 
-    public Texture getBird() {
+    public Texture getTexture() {
         return bird;
+    }
+
+    public void jump() {
+        velocity.y = 250;
     }
 }

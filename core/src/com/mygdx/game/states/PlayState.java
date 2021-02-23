@@ -1,27 +1,34 @@
 package com.mygdx.game.states;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.FlappyDemo;
+import com.mygdx.game.sprites.Bird;
 
 public class PlayState extends State {
-    private Texture bird;
+    private Bird bird;
+    private Texture bg;
 
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
-        bird = new Texture("bird.png");
+        bird = new Bird(50, 100);
         cam.setToOrtho(false, FlappyDemo.WIDTH / 2, FlappyDemo.HEIGHT / 2);
+        bg = new Texture("bg.png");
     }
 
     @Override
     protected void handleInput() {
-
+        if(Gdx.input.isTouched()) {
+            bird.jump();
+        }
     }
 
     @Override
-    public void update(float dl) {
-
+    public void update(float dt) {
+        handleInput();
+        bird.update(dt);
     }
 
     @Override
@@ -32,13 +39,13 @@ public class PlayState extends State {
 
 
         sb.begin();
-        sb.draw(bird, 50, 50);
-
+        sb.draw(bg, cam.position.x - (cam.viewportWidth / 2), 0);
+        sb.draw(bird.getTexture(), bird.getPosition().x, bird.getPosition().y);
         sb.end();
     }
 
     @Override
     public void dispose() {
-        bird.dispose();
+        //bird.dispose();
     }
 }
